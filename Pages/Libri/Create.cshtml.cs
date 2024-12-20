@@ -11,36 +11,61 @@ namespace GestioneLibreriaSaso.Pages.Libri
         public Libro Libro { get; set; }
 
         [BindProperty]
-        public IFormFile File { get; set; }
+        public IFormFile ImgCopertina { get; set; }
 
         public string Messaggio { get; set; }
+
+        public string ConnectionString { get; private set; } = "Server=217.61.62.212;Database=GestioneLibreria_Saso;User Id=sa;Password=Kundividi@FSD2024;Encrypt=True;TrustServerCertificate=True;";
+
 
 
         public void OnGet()
         {
+            List<Autore> ListAutori = new List<Autore>();
+            ListAutori = Autore.getAutori(ConnectionString);
+            ViewData["ListAutori"] = ListAutori;
         }
+
 
 
         public void OnPost()
         {
-            if (File == null || File.Length == 0)
+            if (ImgCopertina == null || ImgCopertina.Length == 0)
             {
                 Messaggio = "Nessun file selezionato.";
                 return;
             }
-            //string fileName = Path.GetFileName(File.FileName);
-            string fileName = Path.GetExtension(File.FileName);
+            //string fileName = Path.GetFileName(ImgCopertina.FileName);
+            string fileName = Guid.NewGuid() + Path.GetExtension(ImgCopertina.FileName);
             string percorso = Path.Combine(
                 Directory.GetCurrentDirectory(),
-                "wwwroot/dist/img/uploads",
+                "wwwroot/dist/img/copertine",
                 fileName
             );
             using (var stream = new FileStream(percorso, FileMode.Create))
             {
-                File.CopyTo(stream);
+                try
+                {
+                    ImgCopertina.CopyTo(stream);
+                }
+                catch
+                {
+                    Messaggio = "Qualcosa è andato storto durante il caricamento dell'immagine";
+                }
             }
             Libro.Copertina = fileName;
-            Messaggio = $"Libro {Libro.Titolo} caricato con immagine {fileName}!";
+
+            
+
+            try
+            {
+                Libro.createLibro(ConnectionString);
+                Messaggio = $"Libro {Libro.Titolo} caricato correttamente!";
+            }
+            catch
+            {
+                Messaggio = "Qualcosa è andato storto durante l'inserimento";
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿@page
+@using GestioneLibreriaSaso.Classi;
 @model GestioneLibreriaSaso.Pages.Libri.CreateModel
 @{
     ViewData["Title"] = "Nuovo libro";
+    List<Autore> Autori = (List<Autore>)ViewData["ListAutori"];
 }
 
 
@@ -10,7 +12,7 @@
 <form method="post" enctype="multipart/form-data">
     <div>
         <label asp-for="ImgCopertina"></label>
-        <input asp-for="File" type="file" class="form-control" />
+        <input asp-for="ImgCopertina" type="file" class="form-control" />
     </div>
     <div>
         <label asp-for="Libro.Titolo"></label>
@@ -29,8 +31,16 @@
         <input asp-for="Libro.DataPubblicazione" class="form-control" />
     </div>
     <div>
-        <label asp-for="Libro.Autore"></label>
-        <input asp-for="Libro.Autore" class="form-control" />
+        <label asp-for="Libro.Autore.IdAutore"></label>
+        <select asp-for="Libro.Autore.IdAutore" class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            @foreach (Autore Autore in Autori)
+            {
+                <option value="@Autore.IdAutore">@Autore.NomeCognome</option>
+            }
+        </select>
     </div>
     <button type="submit">Salva</button>
+
+    <p>@Model.Messaggio</p>
 </form>

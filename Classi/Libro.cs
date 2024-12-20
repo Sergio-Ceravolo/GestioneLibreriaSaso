@@ -17,7 +17,7 @@ namespace GestioneLibreriaSaso.Classi
 
         public Libro()
         {
-
+            Autore = new Autore();
         }
 
         public static Libro getLastLibro(string connectionString)
@@ -189,6 +189,7 @@ namespace GestioneLibreriaSaso.Classi
         }
 
 
+
         public void createLibro(string connectionString)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -202,7 +203,7 @@ namespace GestioneLibreriaSaso.Classi
                     cmd.Parameters.AddWithValue("@TITOLO", Titolo);
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
                     cmd.Parameters.AddWithValue("@GENERE", Genere);
-                    //cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
+                    cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
 
@@ -210,6 +211,36 @@ namespace GestioneLibreriaSaso.Classi
                 }
             }
         }
+
+
+        /*
+        public void editLibro(string connectionString)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "UPDATE LIBRI " +
+                               "SET TITOLO = @Titolo, " +
+                               "DESCRIZIONE = @Descrizione, " +
+                               "GENERE = @Genere, " +
+                               "COPERTINA = @Copertina, " +
+                               "DATA_PUBBLICAZIONE = @DataPubblicazione, " +
+                               "WHERE ID_LIBRI = @IdLibro";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TITOLO", Titolo);
+                    cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
+                    cmd.Parameters.AddWithValue("@GENERE", Genere);
+                    cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
+                    cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
+                    cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
+
+                    cmd.ExecuteScalar();
+                }
+            }
+        }*/
 
     }
 }
