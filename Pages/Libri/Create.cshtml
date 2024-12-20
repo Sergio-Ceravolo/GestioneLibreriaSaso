@@ -1,0 +1,36 @@
+﻿@page
+@model GestioneLibreriaSaso.Pages.Libri.CreateModel
+@{
+    ViewData["Title"] = "Nuovo libro";
+}
+
+
+<h1 class="display-4 text-center m-5">Aggiungi Nuovo Libro</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="ImgCopertina"></label>
+        <input asp-for="File" type="file" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Libro.Titolo"></label>
+        <input asp-for="Libro.Titolo" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Libro.Descrizione"></label>
+        <input asp-for="Libro.Descrizione" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Libro.Genere"></label>
+        <input asp-for="Libro.Genere" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Libro.DataPubblicazione"></label>
+        <input asp-for="Libro.DataPubblicazione" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Libro.Autore"></label>
+        <input asp-for="Libro.Autore" class="form-control" />
+    </div>
+    <button type="submit">Salva</button>
+</form>

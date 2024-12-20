@@ -1,0 +1,53 @@
+﻿@page
+@using GestioneLibreriaSaso.Classi
+@model GestioneLibreriaSaso.Pages.Libri.IndexModel
+@{
+    ViewData["Title"] = "Lista Libri";
+    List<Libro> allLibri = (List<Libro>)ViewData["allLibri"];
+}
+
+
+
+<h1 class="display-4 text-center m-5">Elenco Libri</h1>
+
+<div class="d-flex justify-content-end">
+    <a type="button" class="btn btn-primary" asp-page="/Libri/Create">Aggiungi libro</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Titolo</th>
+            <th scope="col">Data pubblicazione</th>
+            <th scope="col">Genere</th>
+            <th scope="col">Autore</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Libro libro in allLibri)
+        {
+            <tr>
+                <th scope="row">@libro.Titolo</th>
+                <td>@libro.DataPubblicazione.ToShortDateString()</td>
+                <td>@libro.Genere</td>
+                <td>@libro.Autore.Nome @libro.Autore.Cognome</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Small button
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Libri/Details" asp-route-id="@libro.IdLibro">Dettaglio</a></li>
+                                <li><a class="dropdown-item" asp-page="/Libri/Edit" asp-route-id="@libro.IdLibro">Modifica</a></li>
+                                <li><a class="dropdown-item" asp-page="/Libri/Delete" asp-route-id="@libro.IdLibro">Elimina</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

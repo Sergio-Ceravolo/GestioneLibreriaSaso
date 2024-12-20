@@ -1,0 +1,36 @@
+﻿@page
+@using GestioneLibreriaSaso.Classi
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    List<Libro> LibriFantasy = (List<Libro>)ViewData["LibriFantasy"];
+    Libro LastLibro = (Libro)ViewData["LastLibro"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="bg-dark">
+        <img src="@LastLibro.Copertina" />
+        <p>@LastLibro.IdLibro</p>
+        <p>@LastLibro.Titolo</p>
+        <p>@LastLibro.Descrizione</p>
+        <p>@LastLibro.Genere</p>
+        <p>@LastLibro.Autore.Nome @LastLibro.Autore.Cognome</p>
+    </div>
+
+    @for (int i = 0; i < LibriFantasy.Count; i++)
+    {
+        if (LibriFantasy[i].IdLibro != LastLibro.IdLibro)
+        {
+            <img src="@LibriFantasy[i].Copertina" />
+            <p>@LibriFantasy[i].IdLibro</p>
+            <p>@LibriFantasy[i].Titolo</p>
+            <p>@LibriFantasy[i].Descrizione</p>
+            <p>@LibriFantasy[i].Genere</p>
+            <p>@LibriFantasy[i].Autore.Nome @LibriFantasy[i].Autore.Cognome</p>
+        }
+    }
+
+
+</div>
