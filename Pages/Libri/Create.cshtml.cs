@@ -11,7 +11,7 @@ namespace GestioneLibreriaSaso.Pages.Libri
         public Libro Libro { get; set; }
 
         [BindProperty]
-        public IFormFile ImgCopertina { get; set; }
+        public IFormFile? ImgCopertina { get; set; }
 
         public string Messaggio { get; set; }
 
@@ -28,12 +28,20 @@ namespace GestioneLibreriaSaso.Pages.Libri
 
 
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
+                Libro.Autore.IdAutore = 0;
+            
+
+            if (!ModelState.IsValid)
+            {
+                return Page(); // Ricarica la pagina mostrando gli errori
+            }
+
             if (ImgCopertina == null || ImgCopertina.Length == 0)
             {
                 Messaggio = "Nessun file selezionato.";
-                return;
+                return Page(); // Ricarica la pagina mostrando gli errori
             }
             //string fileName = Path.GetFileName(ImgCopertina.FileName);
             string fileName = Guid.NewGuid() + Path.GetExtension(ImgCopertina.FileName);
@@ -66,6 +74,8 @@ namespace GestioneLibreriaSaso.Pages.Libri
             {
                 Messaggio = "Qualcosa è andato storto durante l'inserimento";
             }
+
+            return RedirectToPage("Index");
         }
     }
 }

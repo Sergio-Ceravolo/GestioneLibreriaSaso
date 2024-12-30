@@ -29,7 +29,7 @@
         {
             <tr>
                 <th scope="row">@libro.Titolo</th>
-                <td>@libro.DataPubblicazione.ToShortDateString()</td>
+                <td>@libro.(DateTime)DataPubblicazione.ToShortDateString()</td>
                 <td>@libro.Genere</td>
                 <td>@libro.Autore.Nome @libro.Autore.Cognome</td>
                 <td>

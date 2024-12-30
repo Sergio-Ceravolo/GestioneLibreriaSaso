@@ -17,6 +17,7 @@
     <div>
         <label asp-for="Libro.Titolo"></label>
         <input asp-for="Libro.Titolo" class="form-control" />
+        <span asp-validation-for="Libro.Titolo" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Libro.Descrizione"></label>
@@ -34,9 +35,12 @@
         <label asp-for="Libro.Autore.IdAutore"></label>
         <select asp-for="Libro.Autore.IdAutore" class="form-select" aria-label="Default select example">
             <option selected>Open this select menu</option>
-            @foreach (Autore Autore in Autori)
+            @if (Autori != null)
             {
-                <option value="@Autore.IdAutore">@Autore.NomeCognome</option>
+                foreach (Autore Autore in Autori)
+                {
+                    <option value="@Autore.IdAutore">@Autore.NomeCognome</option>
+                }
             }
         </select>
     </div>

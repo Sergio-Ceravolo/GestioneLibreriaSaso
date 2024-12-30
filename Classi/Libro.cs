@@ -1,16 +1,18 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 
 namespace GestioneLibreriaSaso.Classi
 {
     public class Libro
     {
         public int IdLibro { get; set; }
+        [Required(ErrorMessage = "Il campo Titolo è obbligatorio")]
         public string Titolo { get; set; }
-        public string Descrizione { get; set; }
-        public string Copertina { get; set; }
-        public DateTime DataPubblicazione { get; set; }
-        public string Genere { get; set; }
-        public Autore Autore { get; set; }
+        public string? Descrizione { get; set; }
+        public string? Copertina { get; set; }
+        public DateTime? DataPubblicazione { get; set; }
+        public string? Genere { get; set; }
+        public Autore? Autore { get; set; }
 
 
 
@@ -196,14 +198,17 @@ namespace GestioneLibreriaSaso.Classi
             {
                 conn.Open();
 
-                string query = "INSERT INTO LIBRI (TITOLO, DESCRIZIONE, GENERE, DATA_PUBBLICAZIONE, ID_AUTORE ) VALUE (@TITOLO, @DESCRIZIONE, @GENERE, @COPERTINA, @DATA_PUBBLICAZIONE, @ID_AUTORE); SELECT @@IDENTITY";
+                string query = "INSERT " +
+                                "INTO LIBRI (TITOLO, DESCRIZIONE, GENERE, COPERTINA, DATA_PUBBLICAZIONE, ID_AUTORE ) " +
+                                "VALUES (@TITOLO, @DESCRIZIONE, @GENERE, @COPERTINA, @DATA_PUBBLICAZIONE, @ID_AUTORE); " +
+                                "SELECT @@IDENTITY";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@TITOLO", Titolo);
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
                     cmd.Parameters.AddWithValue("@GENERE", Genere);
-                    cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
+                    cmd.Parameters.AddWithValue("@COPERTINA", "dist/img/copertine/" + Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
 
