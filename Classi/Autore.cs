@@ -1,10 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 
 namespace GestioneLibreriaSaso.Classi
 {
     public class Autore
     {
-        public int? IdAutore { get; set; }
+        [Required(ErrorMessage = "Il campo Autore è obbligatorio")]
+        public int IdAutore { get; set; }
         public string? Nome { get; set; }
         public string? Cognome { get; set; }
         public DateTime? DataNascita { get; set; }

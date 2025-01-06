@@ -1,4 +1,93 @@
 ﻿@page
+@using GestioneLibreriaSaso.Classi;
 @model GestioneLibreriaSaso.Pages.Libri.EditModel
 @{
+    ViewData["Title"] = "Modifica libro";
+    List<Autore> Autori = (List<Autore>)ViewData["ListAutori"];
 }
+
+<h1 class="display-4 text-center my-5">Modifica Libro</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-success my-3">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Warning"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-warning my-3">
+        @TempData["Warning"]
+    </div>
+}
+
+<form method="post" enctype="multipart/form-data" class="container">
+    <div class="row g-3">
+        <input type="text" asp-for="Libro.IdLibro" />
+        <img src="~/@Model.Libro.Copertina" />
+        <!-- Immagine Copertina -->
+        <div class="col-md-6">
+            <label asp-for="ImgCopertina" class="form-label">Copertina</label>
+            <input asp-for="ImgCopertina" type="file" class="form-control" />
+        </div>
+
+        <!-- Titolo -->
+        <div class="col-md-6">
+            <label asp-for="Libro.Titolo" class="form-label">Titolo</label>
+            <input asp-for="Libro.Titolo" class="form-control" />
+            <span asp-validation-for="Libro.Titolo" class="text-danger"></span>
+        </div>
+
+        <!-- Descrizione -->
+        <div class="col-md-12">
+            <label asp-for="Libro.Descrizione" class="form-label">Descrizione</label>
+            <textarea asp-for="Libro.Descrizione" class="form-control" rows="3"></textarea>
+        </div>
+
+        <!-- Genere -->
+        <div class="col-md-6">
+            <label asp-for="Libro.Genere" class="form-label">Genere</label>
+            <select asp-for="Libro.Genere" class="form-select">
+                <option value="" selected>Scegli il genere</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Fantascienza">Fantascienza</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Horror">Horror</option>
+                <option value="Umoristico">Umoristico</option>
+                <option value="Avventura e azione">Avventura e azione</option>
+
+            </select>
+            <span asp-validation-for="Libro.Genere" class="text-danger"></span>
+        </div>
+
+        <!-- Data di Pubblicazione -->
+        <div class="col-md-6">
+            <label asp-for="Libro.DataPubblicazione" class="form-label">Data di Pubblicazione</label>
+            <input asp-for="Libro.DataPubblicazione" type="date" class="form-control" />
+            <span asp-validation-for="Libro.DataPubblicazione" class="text-danger"></span>
+        </div>
+
+        <!-- Autore -->
+        <div class="col-md-12">
+            <label asp-for="Libro.Autore.IdAutore" class="form-label">Autore</label>
+            <select asp-for="Libro.Autore.IdAutore" class="form-select">
+                <option value="" disabled selected>Seleziona un autore</option>
+                @if (Autori != null)
+                {
+                    foreach (Autore Autore in Autori)
+                    {
+                        <option value="@Autore.IdAutore">@Autore.NomeCognome</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="Libro.Autore.IdAutore" class="text-danger"></span>
+        </div>
+
+        <!-- Bottone di Salvataggio -->
+        <div class="col-12 text-center">
+            <a asp-page="/Libri/Index" class="btn btn-secondary">< ANNULLA</a>
+            <button type="submit" class="btn btn-primary px-4">Modifica</button>
+        </div>
+    </div>
+</form>

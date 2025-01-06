@@ -51,6 +51,19 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script>
+        setTimeout(function () {
+            var messaggioAlert = document.getElementById('messaggio-alert');
+            if (messaggioAlert) { // Verifica se l'elemento esiste
+                messaggioAlert.style.display = 'none'; // Nascondi l'elemento
+                // Oppure, per una transizione più fluida:
+                // messaggioAlert.style.opacity = '0';
+                // messaggioAlert.style.transition = 'opacity 1s ease-in-out';
+                // setTimeout(function() { messaggioAlert.remove(); }, 1000);
+            }
+        }, 3000); // 3000 millisecondi = 3 secondi
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 
     @await RenderSectionAsync("Scripts", required: false)

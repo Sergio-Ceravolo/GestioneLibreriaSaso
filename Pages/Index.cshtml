@@ -3,8 +3,10 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    List<Libro> LibriFantasy = (List<Libro>)ViewData["LibriFantasy"];
     Libro LastLibro = (Libro)ViewData["LastLibro"];
+    List<Libro> LibriFantasy = (List<Libro>)ViewData["LibriFantasy"];
+    List<Libro> LibriHorror = (List<Libro>)ViewData["LibriHorror"];
+    List<Libro> LibriFantascienza = (List<Libro>)ViewData["LibriFantascienza"];
 }
 
 <div class="text-center">

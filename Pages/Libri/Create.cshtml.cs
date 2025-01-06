@@ -13,7 +13,7 @@ namespace GestioneLibreriaSaso.Pages.Libri
         [BindProperty]
         public IFormFile? ImgCopertina { get; set; }
 
-        public string Messaggio { get; set; }
+        //public string Messaggio { get; set; }
 
         public string ConnectionString { get; private set; } = "Server=217.61.62.212;Database=GestioneLibreria_Saso;User Id=sa;Password=Kundividi@FSD2024;Encrypt=True;TrustServerCertificate=True;";
 
@@ -30,8 +30,9 @@ namespace GestioneLibreriaSaso.Pages.Libri
 
         public IActionResult OnPost()
         {
-                Libro.Autore.IdAutore = 0;
-            
+            List<Autore> ListAutori = new List<Autore>();
+            ListAutori = Autore.getAutori(ConnectionString);
+            ViewData["ListAutori"] = ListAutori;
 
             if (!ModelState.IsValid)
             {
@@ -40,7 +41,7 @@ namespace GestioneLibreriaSaso.Pages.Libri
 
             if (ImgCopertina == null || ImgCopertina.Length == 0)
             {
-                Messaggio = "Nessun file selezionato.";
+                TempData["Warning"] = "Nessun file selezionato.";
                 return Page(); // Ricarica la pagina mostrando gli errori
             }
             //string fileName = Path.GetFileName(ImgCopertina.FileName);
@@ -58,7 +59,7 @@ namespace GestioneLibreriaSaso.Pages.Libri
                 }
                 catch
                 {
-                    Messaggio = "Qualcosa è andato storto durante il caricamento dell'immagine";
+                    TempData["Warning"] = "Qualcosa è andato storto durante il caricamento dell'immagine";
                 }
             }
             Libro.Copertina = fileName;
@@ -68,11 +69,11 @@ namespace GestioneLibreriaSaso.Pages.Libri
             try
             {
                 Libro.createLibro(ConnectionString);
-                Messaggio = $"Libro {Libro.Titolo} caricato correttamente!";
+                TempData["Success"] = $"Libro {Libro.Titolo} caricato correttamente!";
             }
             catch
             {
-                Messaggio = "Qualcosa è andato storto durante l'inserimento";
+                TempData["Warning"] = "Qualcosa è andato storto durante l'inserimento";
             }
 
             return RedirectToPage("Index");
