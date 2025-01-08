@@ -61,5 +61,29 @@ namespace GestioneLibreriaSaso.Classi
 
             return listAutori;
         }
+
+
+        public void createAutore(string connectionString)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "INSERT " +
+                                "INTO AUTORE (NOME, CONGOME, DATA_NASCITA, PAESE) " +
+                                "VALUES (@NOME, @CONGOME, @DATA_NASCITA, @PAESE); " +
+                                "SELECT @@IDENTITY";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@NOME", Nome);
+                    cmd.Parameters.AddWithValue("@CONGOME", Cognome);
+                    cmd.Parameters.AddWithValue("@DATA_NASCITA", DataNascita);
+                    cmd.Parameters.AddWithValue("@PAESE", Paese);
+
+                    cmd.ExecuteScalar();
+                }
+            }
+        }
     }
 }

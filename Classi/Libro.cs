@@ -221,7 +221,7 @@ namespace GestioneLibreriaSaso.Classi
                     if(Descrizione == null) { Descrizione = ""; }
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
                     cmd.Parameters.AddWithValue("@GENERE", Genere);
-                    cmd.Parameters.AddWithValue("@COPERTINA", "dist/img/copertine/" + Copertina);
+                    cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
 
@@ -273,7 +273,7 @@ namespace GestioneLibreriaSaso.Classi
                     cmd.Parameters.AddWithValue("@TITOLO", Titolo);
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
                     cmd.Parameters.AddWithValue("@GENERE", Genere);
-                    cmd.Parameters.AddWithValue("@COPERTINA", "dist/img/copertine/" + Copertina);
+                    cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
                     cmd.Parameters.AddWithValue("@ID_LIBRO", IdLibro);

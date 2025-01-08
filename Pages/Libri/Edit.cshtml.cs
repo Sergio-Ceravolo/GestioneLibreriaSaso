@@ -32,7 +32,52 @@ namespace GestioneLibreriaSaso.Pages.Libri
 
         public IActionResult OnPost()
         {
-            return Page();
+            List<Autore> ListAutori = new List<Autore>();
+            ListAutori = Autore.getAutori(ConnectionString);
+            ViewData["ListAutori"] = ListAutori;
+
+            if (!ModelState.IsValid)
+            {
+                return Page(); // Ricarica la pagina mostrando gli errori
+            }
+
+            if (ImgCopertina != null && ImgCopertina.Length > 0)
+            {
+
+                //string fileName = Path.GetFileName(ImgCopertina.FileName);
+                string fileName = Guid.NewGuid() + Path.GetExtension(ImgCopertina.FileName);
+                string percorso = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/dist/img/copertine",
+                    fileName
+                );
+                using (var stream = new FileStream(percorso, FileMode.Create))
+                {
+                    try
+                    {
+                        ImgCopertina.CopyTo(stream);
+                    }
+                    catch
+                    {
+                        TempData["Warning"] = "Qualcosa è andato storto durante il caricamento dell'immagine";
+                    }
+                }
+                Libro.Copertina = fileName;
+
+            }
+
+            try
+            {
+                Libro.editLibro(ConnectionString);
+                TempData["Success"] = $"Libro {Libro.Titolo} modificato correttamente!";
+            }
+            catch
+            {
+                TempData["Warning"] = "Qualcosa è andato storto durante la modifica";
+            }
+
+
+            return RedirectToPage("Index");
         }
     }
 }

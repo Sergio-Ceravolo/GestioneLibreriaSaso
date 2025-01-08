@@ -1,4 +1,21 @@
 ﻿@page
+@using GestioneLibreriaSaso.Classi;
 @model GestioneLibreriaSaso.Pages.Libri.DetailsModel
 @{
+    ViewData["Title"] = "Modifica libro";
 }
+
+
+<div class="row my-5">
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <img src="~/dist/img/copertine/@Model.Libro.Copertina" class="img-responsive w-100" alt="">
+    </div>
+    <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+        <h2 class="name">@Model.Libro.Titolo</h2>
+        <strong>Description</strong>
+        <p>@Model.Libro.Descrizione</p>
+        <p>@Model.Libro.Genere</p>
+        <p>@Model.Libro.DataPubblicazione</p>
+        <p>@Model.Libro.Autore.NomeCognome</p>
+    </div>
+</div>

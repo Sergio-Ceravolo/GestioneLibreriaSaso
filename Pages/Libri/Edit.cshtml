@@ -24,8 +24,9 @@
 
 <form method="post" enctype="multipart/form-data" class="container">
     <div class="row g-3">
-        <input type="text" asp-for="Libro.IdLibro" />
-        <img src="~/@Model.Libro.Copertina" />
+        <input type="hidden" asp-for="Libro.IdLibro" />
+        <input type="hidden" asp-for="Libro.Copertina" />
+        <img src="~/dist/img/copertine/@Model.Libro.Copertina" />
         <!-- Immagine Copertina -->
         <div class="col-md-6">
             <label asp-for="ImgCopertina" class="form-label">Copertina</label>

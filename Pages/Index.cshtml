@@ -13,7 +13,7 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <div class="bg-dark">
-        <img src="@LastLibro.Copertina" />
+        <img src="~/dist/img/copertine/@LastLibro.Copertina" />
         <p>@LastLibro.IdLibro</p>
         <p>@LastLibro.Titolo</p>
         <p>@LastLibro.Descrizione</p>
@@ -25,7 +25,7 @@
     {
         if (LibriFantasy[i].IdLibro != LastLibro.IdLibro)
         {
-            <img src="@LibriFantasy[i].Copertina" />
+            <img src="~/dist/img/copertine/@LibriFantasy[i].Copertina" />
             <p>@LibriFantasy[i].IdLibro</p>
             <p>@LibriFantasy[i].Titolo</p>
             <p>@LibriFantasy[i].Descrizione</p>

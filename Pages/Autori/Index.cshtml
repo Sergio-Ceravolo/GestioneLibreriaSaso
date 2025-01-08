@@ -1,8 +1,64 @@
 ﻿@page
+@using GestioneLibreriaSaso.Classi
 @model GestioneLibreriaSaso.Pages.Autori.IndexModel
 @{
+    ViewData["Title"] = "Lista Autori";
+    List<Autore> allAutori = (List<Autore>)ViewData["allAutori"];
 }
 
+<h1 class="display-4 text-center m-5">Elenco Autori</h1>
 
+<div class="d-flex justify-content-end">
+    <a type="button" class="btn btn-primary" asp-page="/Autori/Create">Aggiungi Autore</a>
+</div>
 
-<p>@ViewData["number"]</p>
+@if (TempData["Success"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-success my-3">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Warning"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-warning my-3">
+        @TempData["Warning"]
+    </div>
+}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Cognome</th>
+            <th scope="col">Data di Nascita</th>
+            <th scope="col">Paese</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Libro autore in allAutori)
+        {
+            <tr>
+                <th scope="row">@autore.Nome</th>
+                <td>@autore.DataNascita.ToShortDateString()</td>
+                <td>@autore.Cognome</td>
+                <td>@autore.Paese</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Azioni
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Libri/Details" asp-route-id="@autore.IdAutore">Dettaglio</a></li>
+                                <li><a class="dropdown-item" asp-page="/Libri/Edit" asp-route-id="@autore.IdAutore">Modifica</a></li>
+                                <li><a class="dropdown-item" asp-page="/Libri/Delete" asp-route-id="@autore.IdAutore" asp-route-title="@autore.Titolo">Elimina</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,64 @@
 ﻿@page
+@using GestioneLibreriaSaso.Classi;
 @model GestioneLibreriaSaso.Pages.Autori.CreateModel
 @{
 }
+
+<h1 class="display-4 text-center my-5">Aggiungi Nuovo Autore</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-success my-3">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Warning"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-warning my-3">
+        @TempData["Warning"]
+    </div>
+}
+
+<form method="post" class="container">
+    <div class="row g-3">
+        <!-- Nome -->
+        <div class="col-md-6">
+            <label asp-for="Autore.Nome" class="form-label">Nome</label>
+            <input asp-for="Autore.Nome" class="form-control" />
+            <span asp-validation-for="Autore.Nome" class="text-danger"></span>
+        </div>
+
+        <!-- Cognome -->
+        <div class="col-md-6">
+            <label asp-for="Autore.Cognome" class="form-label">Cognome</label>
+            <input asp-for="Autore.Cognome" class="form-control" />
+            <span asp-validation-for="Autore.Cognome" class="text-danger"></span>
+        </div>
+
+        <!-- Data di nascita -->
+        <div class="col-md-6">
+            <label asp-for="Autore.DataNascita" class="form-label">Data di Nascita</label>
+            <input asp-for="Autore.DataNascita" type="date" class="form-control" />
+            <span asp-validation-for="Autore.DataNascita" class="text-danger"></span>
+        </div>
+
+        <!-- Paese -->
+        <div class="col-md-12">
+            <label asp-for="Autore.Paese" class="form-label">Paese</label>
+            <select asp-for="Autore.Paese" class="form-select">
+                <option value="" disabled selected>Seleziona un autore</option>
+                
+            </select>
+            <span asp-validation-for="Autore.Paese" class="text-danger"></span>
+        </div>
+
+        <!-- Bottone di Salvataggio -->
+        <div class="col-12 text-center">
+            <a asp-page="/Autori/Index" class="btn btn-secondary">< ANNULLA</a>
+            <button type="submit" class="btn btn-primary px-4">Salva</button>
+        </div>
+    </div>
+</form>
+
+
