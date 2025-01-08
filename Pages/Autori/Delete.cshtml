@@ -2,3 +2,39 @@
 @model GestioneLibreriaSaso.Pages.Autori.DeleteModel
 @{
 }
+
+
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            @Model.NomeCognome
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <label class="form-label">Rimuovere l'autore' "@Model.NomeCognome"?</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Rimuovi" value="0" checked>
+                        <label class="form-check-label" for="no">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Rimuovi" value="1">
+                        <label class="form-check-label" for="si">Si</label>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>ATTENZIONE:</strong><br>
+                    Stai per eliminare l'autore' "@Model.NomeCognome". Vuoi procedere con l'eliminazione?
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-page="/Autori/Index" class="btn btn-secondary">< ANNULLA</a>
+                    <button type="submit" class="btn btn-danger">CONFERMA</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

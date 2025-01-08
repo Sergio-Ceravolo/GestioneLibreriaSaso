@@ -37,12 +37,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Libro autore in allAutori)
+        @foreach (Autore autore in allAutori)
         {
             <tr>
-                <th scope="row">@autore.Nome</th>
-                <td>@autore.DataNascita.ToShortDateString()</td>
+                <td scope="row">@autore.Nome</td>
                 <td>@autore.Cognome</td>
+                <td>@autore.DataNascita.ToShortDateString()</td>
                 <td>@autore.Paese</td>
                 <td>
                     <div class="d-flex justify-content-end">
@@ -51,9 +51,8 @@
                                 Azioni
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-page="/Libri/Details" asp-route-id="@autore.IdAutore">Dettaglio</a></li>
-                                <li><a class="dropdown-item" asp-page="/Libri/Edit" asp-route-id="@autore.IdAutore">Modifica</a></li>
-                                <li><a class="dropdown-item" asp-page="/Libri/Delete" asp-route-id="@autore.IdAutore" asp-route-title="@autore.Titolo">Elimina</a></li>
+                                <li><a class="dropdown-item" asp-page="/Autori/Edit" asp-route-id="@autore.IdAutore">Modifica</a></li>
+                                <li><a class="dropdown-item" asp-page="/Autori/Delete" asp-route-id="@autore.IdAutore" asp-route-nomeCognome="@autore.NomeCognome">Elimina</a></li>
                             </ul>
                         </div>
                     </div>

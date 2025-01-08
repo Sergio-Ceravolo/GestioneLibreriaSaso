@@ -246,7 +246,7 @@ namespace GestioneLibreriaSaso.Classi
                 {
                     cmd.Parameters.AddWithValue("@ID_LIBRO", IdLibro);
 
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace GestioneLibreriaSaso.Classi
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
                     cmd.Parameters.AddWithValue("@ID_LIBRO", IdLibro);
 
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

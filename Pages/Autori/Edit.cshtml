@@ -1,4 +1,101 @@
 ﻿@page
 @model GestioneLibreriaSaso.Pages.Autori.EditModel
 @{
+    ViewData["Title"] = "Modifica libro";
 }
+
+<h1 class="display-4 text-center my-5">Modifica Libro</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-success my-3">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Warning"] != null)
+{
+    <div id="messaggio-alert" class="alert alert-warning my-3">
+        @TempData["Warning"]
+    </div>
+}
+
+<form method="post" enctype="multipart/form-data" class="container">
+    <div class="row g-3">
+        <input type="hidden" asp-for="Autore.IdAutore" />
+
+        <!-- Nome -->
+        <div class="col-md-6">
+            <label asp-for="Autore.Nome" class="form-label">Nome</label>
+            <input asp-for="Autore.Nome" class="form-control" />
+            <span asp-validation-for="Autore.Nome" class="text-danger"></span>
+        </div>
+
+        <!-- Cognome -->
+        <div class="col-md-6">
+            <label asp-for="Autore.Cognome" class="form-label">Cognome</label>
+            <input asp-for="Autore.Cognome" class="form-control" />
+            <span asp-validation-for="Autore.Cognome" class="text-danger"></span>
+        </div>
+
+        <!-- Data di nascita -->
+        <div class="col-md-6">
+            <label asp-for="Autore.DataNascita" class="form-label">Data di Nascita</label>
+            <input asp-for="Autore.DataNascita" type="date" class="form-control" />
+            <span asp-validation-for="Autore.DataNascita" class="text-danger"></span>
+        </div>
+
+        <!-- Paese -->
+        <div class="col-md-6">
+            <label asp-for="Autore.Paese" class="form-label">Paese</label>
+            <select asp-for="Autore.Paese" class="form-select">
+                <option value="" disabled selected>Seleziona un Paese</option>
+                <option value="Italia">Italia</option>
+                <option disabled>-</option>
+                <option value="Albania">Albania</option>
+                <option value="Andorra">Andorra</option>
+                <option value="Austria">Austria</option>
+                <option value="Belgio">Belgio</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Croazia">Croazia</option>
+                <option value="Cipro">Cipro</option>
+                <option value="Repubblica-ceca">Repubblica Ceca</option>
+                <option value="Danimarca">Danimarca</option>
+                <option value="Estonia">Estonia</option>
+                <option value="Finlandia">Finlandia</option>
+                <option value="Francia">Francia</option>
+                <option value="Germania">Germania</option>
+                <option value="Grecia">Grecia</option>
+                <option value="Hungaria">Ungheria</option>
+                <option value="Islanda">Islanda</option>
+                <option value="Lettonia">Lettonia</option>
+                <option value="Lituania">Lituania</option>
+                <option value="Lussemburgo">Lussemburgo</option>
+                <option value="Malta">Malta</option>
+                <option value="Moldavia">Moldavia</option>
+                <option value="Monaco">Monaco</option>
+                <option value="Norvegia">Norvegia</option>
+                <option value="Paesi-bassi">Paesi Bassi</option>
+                <option value="Polonia">Polonia</option>
+                <option value="Portogallo">Portogallo</option>
+                <option value="Regno-unito">Regno Unito</option>
+                <option value="Romania">Romania</option>
+                <option value="San-marino">San Marino</option>
+                <option value="Serbia">Serbia</option>
+                <option value="Slovacchia">Slovacchia</option>
+                <option value="Slovenia">Slovenia</option>
+                <option value="Spagna">Spagna</option>
+                <option value="Svezia">Svezia</option>
+                <option value="Svizzera">Svizzera</option>
+                <option value="Ucraina">Ucraina</option>
+            </select>
+            <span asp-validation-for="Autore.Paese" class="text-danger"></span>
+        </div>
+
+        <!-- Bottone di Salvataggio -->
+        <div class="col-12 text-center">
+            <a asp-page="/Autori/Index" class="btn btn-secondary">< ANNULLA</a>
+            <button type="submit" class="btn btn-primary px-4">Modifica</button>
+        </div>
+    </div>
+</form>
