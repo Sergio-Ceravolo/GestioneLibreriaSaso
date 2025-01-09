@@ -20,9 +20,11 @@ namespace GestioneLibreriaSaso.Pages
         {
             string connectionString = "Server=217.61.62.212;Database=GestioneLibreria_Saso;User Id=sa;Password=Kundividi@FSD2024;Encrypt=True;TrustServerCertificate=True;";
 
-            ViewData["LibriFantasy"] = Libro.getLibriGenres(connectionString, "Fantasy");
-            ViewData["LibriHorror"] = Libro.getLibriGenres(connectionString, "Horror");
-            ViewData["LibriFantascienza"] = Libro.getLibriGenres(connectionString, "Fantascienza");
+            //ViewData["LibriHorror"] = Libro.getLibriGenres(connectionString, 1);
+            //ViewData["LibriFantascienza"] = Libro.getLibriGenres(connectionString, 2);
+
+            List<Libro> libri = Libro.getLibri(connectionString);
+            ViewData["LibriHorror"] = (List<Libro>)(libri.Where(l => l.Genere.IdGenere == 1).ToList());
 
             Libro LastLibro = Libro.getLastLibro(connectionString);
             ViewData["LastLibro"] = LastLibro;

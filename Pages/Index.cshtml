@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "Home page";
     Libro LastLibro = (Libro)ViewData["LastLibro"];
-    List<Libro> LibriFantasy = (List<Libro>)ViewData["LibriFantasy"];
     List<Libro> LibriHorror = (List<Libro>)ViewData["LibriHorror"];
     List<Libro> LibriFantascienza = (List<Libro>)ViewData["LibriFantascienza"];
 }
@@ -21,18 +20,19 @@
         <p>@LastLibro.Autore.Nome @LastLibro.Autore.Cognome</p>
     </div>
 
-    @for (int i = 0; i < LibriFantasy.Count; i++)
+    @for (int i = 0; i < LibriHorror.Count; i++)
     {
-        if (LibriFantasy[i].IdLibro != LastLibro.IdLibro)
+        if (LibriHorror[i].IdLibro != LastLibro.IdLibro)
         {
-            <img src="~/dist/img/copertine/@LibriFantasy[i].Copertina" />
-            <p>@LibriFantasy[i].IdLibro</p>
-            <p>@LibriFantasy[i].Titolo</p>
-            <p>@LibriFantasy[i].Descrizione</p>
-            <p>@LibriFantasy[i].Genere</p>
-            <p>@LibriFantasy[i].Autore.Nome @LibriFantasy[i].Autore.Cognome</p>
+            <img src="~/dist/img/copertine/@LibriHorror[i].Copertina" />
+            <p>@LibriHorror[i].IdLibro</p>
+            <p>@LibriHorror[i].Titolo</p>
+            <p>@LibriHorror[i].Descrizione</p>
+            <p>@LibriHorror[i].Genere.NomeGenere</p>
+            <p>@LibriHorror[i].Autore.NomeCognome</p>
         }
     }
+
 
 
 </div>

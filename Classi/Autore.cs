@@ -20,12 +20,15 @@ namespace GestioneLibreriaSaso.Classi
         [Required(ErrorMessage = "Il campo Paese è obbligatorio")]
         public string Paese { get; set; }
 
-        public string? NomeCognome { get; private set; }
+        public string? NomeCognome
+        {
+            get { return Nome + " " + Cognome; }
+        }
 
 
         public Autore()
         {
-            
+
         }
 
         public static List<Autore> getAutori(string connectionString)
@@ -51,7 +54,7 @@ namespace GestioneLibreriaSaso.Classi
 
                         while (reader.Read())
                         {
-                            
+
                             listAutori.Add(new Autore
                             {
                                 IdAutore = (int)reader["ID_AUTORE"],
@@ -59,7 +62,6 @@ namespace GestioneLibreriaSaso.Classi
                                 Cognome = reader["COGNOME"].ToString(),
                                 DataNascita = (DateTime)reader["DATA_NASCITA"],
                                 Paese = reader["PAESE"].ToString(),
-                                NomeCognome = reader["NOME"].ToString() + " " + reader["COGNOME"].ToString()
                             });
                         }
 
@@ -174,7 +176,6 @@ namespace GestioneLibreriaSaso.Classi
                             Cognome = reader["COGNOME"].ToString();
                             DataNascita = (DateTime)reader["DATA_NASCITA"];
                             Paese = reader["PAESE"].ToString();
-                            NomeCognome = reader["NOME"].ToString() + " " + reader["COGNOME"].ToString();
                         }
 
                     }

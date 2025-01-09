@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 
 namespace GestioneLibreriaSaso.Classi
@@ -21,9 +22,9 @@ namespace GestioneLibreriaSaso.Classi
         public DateTime DataPubblicazione { get; set; }
 
 
-        [Required(ErrorMessage = "Il campo Genere è obbligatorio")]
-        public string Genere { get; set; }
+        public Genere Genere { get; set; }
 
+        [ValidateNever]
         public Autore Autore { get; set; }
 
 
@@ -47,13 +48,16 @@ namespace GestioneLibreriaSaso.Classi
                                "DESCRIZIONE, " +
                                "COPERTINA, " +
                                "DATA_PUBBLICAZIONE, " +
-                               "GENERE, " +
                                "NOME, " +
                                "COGNOME, " +
-                               "LIBRI.ID_AUTORE " +
+                               "LIBRI.ID_AUTORE, " +
+                               "GENERI.ID_GENERE, " +
+                               "GENERI.NOME_GENERE " +
                                "FROM LIBRI " +
                                "JOIN AUTORI " +
                                "ON AUTORI.ID_AUTORE = LIBRI.ID_AUTORE " +
+                               "JOIN GENERI " +
+                               "ON GENERI.ID_GENERE = LIBRI.ID_GENERE " +
                                "ORDER BY ID_LIBRO DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -70,13 +74,19 @@ namespace GestioneLibreriaSaso.Classi
                             autore.Nome = reader["NOME"].ToString();
                             autore.Cognome = reader["COGNOME"].ToString();
 
+                            Genere genere = new Genere();
+                            int IdGenere = 0;
+                            int.TryParse(reader["ID_GENERE"].ToString(), out IdGenere);
+                            genere.IdGenere = IdGenere;
+                            genere.NomeGenere = reader["NOME_GENERE"].ToString();
+
 
                             lastLibro.IdLibro = (int)reader["ID_Libro"];
                             lastLibro.Titolo = reader["TITOLO"].ToString();
                             lastLibro.Descrizione = reader["DESCRIZIONE"].ToString();
                             lastLibro.Copertina = reader["COPERTINA"].ToString();
                             lastLibro.DataPubblicazione = (DateTime)reader["DATA_PUBBLICAZIONE"];
-                            lastLibro.Genere = reader["GENERE"].ToString();
+                            lastLibro.Genere = genere;
                             lastLibro.Autore = autore;
                         }
 
@@ -89,7 +99,7 @@ namespace GestioneLibreriaSaso.Classi
 
 
 
-        public static List<Libro> getLibriGenres(string connectionString, string genre)
+        public static List<Libro> getLibriGenres(string connectionString, int idGenre)
         {
             List<Libro> listLibri = new List<Libro>();
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -102,14 +112,17 @@ namespace GestioneLibreriaSaso.Classi
                                "DESCRIZIONE, " +
                                "COPERTINA, " +
                                "DATA_PUBBLICAZIONE, " +
-                               "GENERE, " +
                                "NOME, " +
                                "COGNOME, " +
-                               "LIBRI.ID_AUTORE " +
+                               "LIBRI.ID_AUTORE, " +
+                               "LIBRI.ID_GENERE, " +
+                               "GENERI.NOME_GENERE " +
                                "FROM LIBRI " +
                                "JOIN AUTORI " +
                                "ON AUTORI.ID_AUTORE = LIBRI.ID_AUTORE " +
-                               "WHERE GENERE = '" + genre + "'" +
+                               "JOIN GENERI " +
+                               "ON GENERI.ID_GENERE = LIBRI.ID_GENERE " +
+                               "WHERE LIBRI.ID_GENERE = " + idGenre +
                                "ORDER BY ID_LIBRO DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -126,6 +139,12 @@ namespace GestioneLibreriaSaso.Classi
                             autore.Nome = reader["NOME"].ToString();
                             autore.Cognome = reader["COGNOME"].ToString();
 
+                            Genere genere = new Genere();
+                            int IdGenere = 0;
+                            int.TryParse(reader["Id_GENERE"].ToString() , out IdGenere);
+                            genere.IdGenere = IdGenere;
+                            genere.NomeGenere = reader["NOME_GENERE"].ToString();
+
                             listLibri.Add(new Libro
                             {
                                 IdLibro = (int)reader["ID_Libro"],
@@ -133,7 +152,7 @@ namespace GestioneLibreriaSaso.Classi
                                 Descrizione = reader["DESCRIZIONE"].ToString(),
                                 Copertina = reader["COPERTINA"].ToString(),
                                 DataPubblicazione = (DateTime)reader["DATA_PUBBLICAZIONE"],
-                                Genere = reader["GENERE"].ToString(),
+                                Genere = genere,
                                 Autore = autore
                             });
                         }
@@ -160,13 +179,16 @@ namespace GestioneLibreriaSaso.Classi
                                "DESCRIZIONE, " +
                                "COPERTINA, " +
                                "DATA_PUBBLICAZIONE, " +
-                               "GENERE, " +
                                "NOME, " +
                                "COGNOME, " +
-                               "LIBRI.ID_AUTORE " +
+                               "LIBRI.ID_AUTORE, " +
+                               "GENERI.ID_GENERE, " +
+                               "GENERI.NOME_GENERE " +
                                "FROM LIBRI " +
                                "JOIN AUTORI " +
                                "ON AUTORI.ID_AUTORE = LIBRI.ID_AUTORE " +
+                               "JOIN GENERI " +
+                               "ON GENERI.ID_GENERE = LIBRI.ID_GENERE " +
                                "ORDER BY ID_LIBRO DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -183,6 +205,12 @@ namespace GestioneLibreriaSaso.Classi
                             autore.Nome = reader["NOME"].ToString();
                             autore.Cognome = reader["COGNOME"].ToString();
 
+                            Genere genere = new Genere();
+                            int IdGenere = 0;
+                            int.TryParse(reader["ID_GENERE"].ToString(), out IdGenere);
+                            genere.IdGenere = IdGenere;
+                            genere.NomeGenere = reader["NOME_GENERE"].ToString();
+
                             listLibri.Add(new Libro
                             {
                                 IdLibro = (int)reader["ID_Libro"],
@@ -190,7 +218,7 @@ namespace GestioneLibreriaSaso.Classi
                                 Descrizione = reader["DESCRIZIONE"].ToString(),
                                 Copertina = reader["COPERTINA"].ToString(),
                                 DataPubblicazione = (DateTime)reader["DATA_PUBBLICAZIONE"],
-                                Genere = reader["GENERE"].ToString(),
+                                Genere = genere,
                                 Autore = autore
                             });
                         }
@@ -211,8 +239,8 @@ namespace GestioneLibreriaSaso.Classi
                 conn.Open();
 
                 string query = "INSERT " +
-                                "INTO LIBRI (TITOLO, DESCRIZIONE, GENERE, COPERTINA, DATA_PUBBLICAZIONE, ID_AUTORE ) " +
-                                "VALUES (@TITOLO, @DESCRIZIONE, @GENERE, @COPERTINA, @DATA_PUBBLICAZIONE, @ID_AUTORE); " +
+                                "INTO LIBRI (TITOLO, DESCRIZIONE, COPERTINA, DATA_PUBBLICAZIONE, ID_AUTORE, ID_GENERE ) " +
+                                "VALUES (@TITOLO, @DESCRIZIONE, @COPERTINA, @DATA_PUBBLICAZIONE, @ID_AUTORE, @ID_GENERE); " +
                                 "SELECT @@IDENTITY";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -220,10 +248,10 @@ namespace GestioneLibreriaSaso.Classi
                     cmd.Parameters.AddWithValue("@TITOLO", Titolo);
                     if(Descrizione == null) { Descrizione = ""; }
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
-                    cmd.Parameters.AddWithValue("@GENERE", Genere);
                     cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
+                    cmd.Parameters.AddWithValue("@ID_GENERE", Genere.IdGenere);
 
                     cmd.ExecuteScalar();
                 }
@@ -300,7 +328,9 @@ namespace GestioneLibreriaSaso.Classi
                                "GENERE, " +
                                "NOME, " +
                                "COGNOME, " +
-                               "LIBRI.ID_AUTORE " +
+                               "LIBRI.ID_AUTORE, " +
+                               "GENERI.ID_GENERE, " +
+                               "GENERI.NOME_GENERE " +
                                "FROM LIBRI " +
                                "JOIN AUTORI " +
                                "ON AUTORI.ID_AUTORE = LIBRI.ID_AUTORE " +
@@ -322,12 +352,18 @@ namespace GestioneLibreriaSaso.Classi
                             autore.Nome = reader["NOME"].ToString();
                             autore.Cognome = reader["COGNOME"].ToString();
 
+                            Genere genere = new Genere();
+                            int IdGenere = 0;
+                            int.TryParse(reader["ID_GENERE"].ToString(), out IdGenere);
+                            genere.IdGenere = IdGenere;
+                            genere.NomeGenere = reader["NOME_GENERE"].ToString();
+
                             IdLibro = (int)reader["ID_Libro"];
                             Titolo = reader["TITOLO"].ToString();
                             Descrizione = reader["DESCRIZIONE"].ToString();
                             Copertina = reader["COPERTINA"].ToString();
                             DataPubblicazione = (DateTime)reader["DATA_PUBBLICAZIONE"];
-                            Genere = reader["GENERE"].ToString();
+                            Genere = genere;
                             Autore = autore;
                         }
 

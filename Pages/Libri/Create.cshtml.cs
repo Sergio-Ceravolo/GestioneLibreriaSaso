@@ -24,6 +24,10 @@ namespace GestioneLibreriaSaso.Pages.Libri
             List<Autore> ListAutori = new List<Autore>();
             ListAutori = Autore.getAutori(ConnectionString);
             ViewData["ListAutori"] = ListAutori;
+
+            List<Genere> listGeneri = new List<Genere>();
+            listGeneri = Genere.getGeneri(ConnectionString);
+            ViewData["ListGeneri"] = listGeneri;
         }
 
 
@@ -33,6 +37,10 @@ namespace GestioneLibreriaSaso.Pages.Libri
             List<Autore> ListAutori = new List<Autore>();
             ListAutori = Autore.getAutori(ConnectionString);
             ViewData["ListAutori"] = ListAutori;
+
+            List<Genere> listGeneri = new List<Genere>();
+            listGeneri = Genere.getGeneri(ConnectionString);
+            ViewData["ListGeneri"] = listGeneri;
 
             if (!ModelState.IsValid)
             {

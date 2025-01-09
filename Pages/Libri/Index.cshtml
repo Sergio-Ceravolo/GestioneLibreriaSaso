@@ -44,8 +44,8 @@
             <tr>
                 <th scope="row">@libro.Titolo</th>
                 <td>@libro.DataPubblicazione.ToShortDateString()</td>
-                <td>@libro.Genere</td>
-                <td>@libro.Autore.Nome @libro.Autore.Cognome</td>
+                <td>@libro.Genere.NomeGenere</td>
+                <td>@libro.Autore.NomeCognome</td>
                 <td>
                     <div class="d-flex justify-content-end">
                         <div class="btn-group">
