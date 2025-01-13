@@ -22,6 +22,7 @@ namespace GestioneLibreriaSaso.Classi
         public DateTime DataPubblicazione { get; set; }
 
 
+        [ValidateNever]
         public Genere Genere { get; set; }
 
         [ValidateNever]
@@ -290,20 +291,20 @@ namespace GestioneLibreriaSaso.Classi
                 string query = "UPDATE LIBRI " +
                                "SET TITOLO = @TITOLO, " +
                                "DESCRIZIONE = @DESCRIZIONE, " +
-                               "GENERE = @GENERE, " +
                                "COPERTINA = @COPERTINA, " +
                                "DATA_PUBBLICAZIONE = @DATA_PUBBLICAZIONE, " +
-                               "ID_AUTORE = @ID_AUTORE " +
+                               "ID_AUTORE = @ID_AUTORE, " +
+                               "ID_GENERE = @ID_GENERE " +
                                "WHERE ID_LIBRO = @ID_LIBRO";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@TITOLO", Titolo);
                     cmd.Parameters.AddWithValue("@DESCRIZIONE", Descrizione);
-                    cmd.Parameters.AddWithValue("@GENERE", Genere);
                     cmd.Parameters.AddWithValue("@COPERTINA", Copertina);
                     cmd.Parameters.AddWithValue("@DATA_PUBBLICAZIONE", DataPubblicazione);
                     cmd.Parameters.AddWithValue("@ID_AUTORE", Autore.IdAutore);
+                    cmd.Parameters.AddWithValue("@ID_GENERE", Genere.IdGenere);
                     cmd.Parameters.AddWithValue("@ID_LIBRO", IdLibro);
 
                     cmd.ExecuteNonQuery();
@@ -325,7 +326,6 @@ namespace GestioneLibreriaSaso.Classi
                                "DESCRIZIONE, " +
                                "COPERTINA, " +
                                "DATA_PUBBLICAZIONE, " +
-                               "GENERE, " +
                                "NOME, " +
                                "COGNOME, " +
                                "LIBRI.ID_AUTORE, " +
@@ -334,6 +334,8 @@ namespace GestioneLibreriaSaso.Classi
                                "FROM LIBRI " +
                                "JOIN AUTORI " +
                                "ON AUTORI.ID_AUTORE = LIBRI.ID_AUTORE " +
+                               "JOIN GENERI " +
+                               "ON GENERI.ID_GENERE = LIBRI.ID_GENERE " +
                                "WHERE ID_LIBRO = @ID_LIBRO";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))

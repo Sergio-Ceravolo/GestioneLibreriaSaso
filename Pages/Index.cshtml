@@ -4,32 +4,82 @@
 @{
     ViewData["Title"] = "Home page";
     Libro LastLibro = (Libro)ViewData["LastLibro"];
-    List<Libro> LibriHorror = (List<Libro>)ViewData["LibriHorror"];
-    List<Libro> LibriFantascienza = (List<Libro>)ViewData["LibriFantascienza"];
+    // List<Genere> ListGeneri = (List<Genere>)ViewData["ListGeneri"];
+    List<List<Libro>> ListaLibriPerGenere = (List<List<Libro>>)ViewData["ListaLibriPerGenere"];
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @* <h1 class="display-4">Welcome</h1> *@
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
     <div class="bg-dark">
-        <img src="~/dist/img/copertine/@LastLibro.Copertina" />
+        <img src="~/dist/img/copertine/@LastLibro.Copertina" style="width: 200px;" />
         <p>@LastLibro.IdLibro</p>
         <p>@LastLibro.Titolo</p>
         <p>@LastLibro.Descrizione</p>
-        <p>@LastLibro.Genere</p>
+        <p>@LastLibro.Genere.NomeGenere</p>
         <p>@LastLibro.Autore.Nome @LastLibro.Autore.Cognome</p>
     </div>
 
-    @for (int i = 0; i < LibriHorror.Count; i++)
-    {
-        if (LibriHorror[i].IdLibro != LastLibro.IdLibro)
+    @{
+        foreach (List<Libro> Lista in ListaLibriPerGenere)
         {
-            <img src="~/dist/img/copertine/@LibriHorror[i].Copertina" />
-            <p>@LibriHorror[i].IdLibro</p>
-            <p>@LibriHorror[i].Titolo</p>
-            <p>@LibriHorror[i].Descrizione</p>
-            <p>@LibriHorror[i].Genere.NomeGenere</p>
-            <p>@LibriHorror[i].Autore.NomeCognome</p>
+            if (Lista.Count >= 1)
+            {
+                <h3 class="text-start">@Lista[0].Genere.NomeGenere</h3>
+                <div id="@Lista[0].Genere.NomeGenere" class="carousel slide container" data-bs-ride="carousel">
+                    <div class="carousel-inner w-100">
+                        @for (int i = 0; i < Lista.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                <div class="carousel-item active ">
+                                    <div class="col-md-3">
+                                        <div class="card card-body">
+                                            <img src="~/dist/img/copertine/@Lista[i].Copertina" class="card-img-top" alt="width: 200px;" />
+                                            <div class="card-body text-start" id="@Lista[i].IdLibro">
+                                                <h4>@Lista[i].IdLibro</h4>
+                                                <p class="card-text">
+                                                    @Lista[i].Descrizione
+                                                </p>
+                                                <span class="text-muted fs-6">
+                                                    @Lista[i].Autore.NomeCognome
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item  ">
+                                    <div class="col-md-3">
+                                        <div class="card card-body">
+                                            <img src="~/dist/img/copertine/@Lista[i].Copertina" class="card-img-top" alt="width: 200px;" />
+                                            <div class="card-body text-start" id="@Lista[i].IdLibro">
+                                                <h4>@Lista[i].IdLibro</h4>
+                                                <p class="card-text">
+                                                    @Lista[i].Descrizione
+                                                </p>
+                                                <span class="text-muted fs-6">
+                                                    @Lista[i].Autore.NomeCognome
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev btn btn-dark" type="button" data-bs-target="#@Lista[0].Genere.NomeGenere" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next btn btn-dark" type="button" data-bs-target="#@Lista[0].Genere.NomeGenere" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            }
         }
     }
 
